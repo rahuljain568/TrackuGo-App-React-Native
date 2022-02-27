@@ -1,0 +1,117 @@
+{
+  "project_info": {
+    "project_number": "725352850000",
+    "firebase_url": "https://track-you-250410.firebaseio.com",
+    "project_id": "track-you-250410",
+    "storage_bucket": "track-you-250410.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:725352850000:android:57a138ba14c861ac8b2755",
+        "android_client_info": {
+          "package_name": "com.satrack"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "725352850000-c5c7qfndflhe4boncq18jq49uovsvjg7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.satrack",
+            "certificate_hash": "a7b2b37a26bd736c3e9a9539df52be2192763d1f"
+          }
+        },
+        {
+          "client_id": "725352850000-ilf6kgb58mmms45m4pfff6gn4a2fq1im.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.satrack",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "725352850000-6nkt704ip4casc1l5o9umpfnfh3nop72.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.satrack",
+            "certificate_hash": "971c5263866d4aa2504cd6e768847d4f973e848f"
+          }
+        },
+        {
+          "client_id": "725352850000-ne689d739lkla24js92iur82mkgtpr56.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAx3mWn0HWjl9xDSBobBDZpuRG3c3i4Xpk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "725352850000-ne689d739lkla24js92iur82mkgtpr56.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:725352850000:android:72569a84e866bd63",
+        "android_client_info": {
+          "package_name": "com.trackyou"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "725352850000-k1sie1lm3r2cnl66fs9050rq9a5ufoed.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.trackyou",
+            "certificate_hash": "a7b2b37a26bd736c3e9a9539df52be2192763d1f"
+          }
+        },
+        {
+          "client_id": "725352850000-i4usru0rqqacs99q6g2etsqrjc5plhdh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.trackyou",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "725352850000-m0nikfiqs9ribh90h4o8qhkui7c5e12k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.trackyou",
+            "certificate_hash": "971c5263866d4aa2504cd6e768847d4f973e848f"
+          }
+        },
+        {
+          "client_id": "725352850000-ne689d739lkla24js92iur82mkgtpr56.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAx3mWn0HWjl9xDSBobBDZpuRG3c3i4Xpk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "725352850000-ne689d739lkla24js92iur82mkgtpr56.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

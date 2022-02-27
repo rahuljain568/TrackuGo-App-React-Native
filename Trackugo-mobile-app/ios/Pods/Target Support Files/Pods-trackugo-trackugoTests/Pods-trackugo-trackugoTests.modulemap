@@ -1,0 +1,6 @@
+module Pods_trackugo_trackugoTests {
+  umbrella header "Pods-trackugo-trackugoTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
