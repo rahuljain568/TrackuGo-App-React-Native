@@ -287,8 +287,7 @@ export default class AuthenticationComponent extends Component {
                 }}>
                 <Text style={{ color: '#fff', fontSize: 20 }}>Sign In</Text>
               </LinearGradient>
-            </TouchableOpacity>
-            <View style={mainStyle.flexRow}>
+            </TouchableOpacity> 
               <Text
                 onPress={() =>
                   NavigationService.navigate("auth", "ForgotPassword")
@@ -302,9 +301,8 @@ export default class AuthenticationComponent extends Component {
                 ]}
               >
                 Forgot Password?
-              </Text>
-            </View>
-            <View style={mainStyle.flexRow, mainStyle.flexOne}>
+              </Text> 
+            <View>
               <Text
                 onPress={() => NavigationService.navigate("auth", "SignUp")}
                 style={[
@@ -663,7 +661,7 @@ export class SignUpComponent extends Component {
                 />
               </View>
             </TouchableOpacity>
-            <View style={{ marginBottom: 15 }}>
+            {/* <View style={{ marginBottom: 15 }}>
               <Text style={[authStyle.txtInputLabel, { marginTop: -7 }]}>Gender</Text>
               <View style={authStyle.vwGender}>
                 <TouchableOpacity onPress={() => this.onPressGender(1)}
@@ -682,7 +680,7 @@ export class SignUpComponent extends Component {
                   <Text style={[authStyle.txtGender, gender == 'Other' ? { color: "#ffffff" } : { color: "#333333" }]}>Other</Text>
                 </TouchableOpacity>
               </View>
-            </View>
+            </View> */}
             <View style={{ marginBottom: 15 }}>
               <View style={[authStyle.formInput, errors.address ? mainStyle.inputError : null]} >
                 <TextInput
@@ -698,7 +696,23 @@ export class SignUpComponent extends Component {
                   <Text style={mainStyle.errorMessage}>{messages.address}</Text>
                 </View>
               }
-            </View>
+            </View> 
+            {/* <View style={{ marginBottom: 15 }}>
+              <View style={[authStyle.formInput, errors.address ? mainStyle.inputError : null]} >
+                <TextInput
+                  style={authStyle.formInputField}
+                  onChangeText={(value) => this.validateInput(value, 'country')}
+                  placeholder="Country"
+                />
+
+              </View>
+              {
+                errors.address &&
+                <View style={authStyle.vwError}>
+                  <Text style={mainStyle.errorMessage}>{messages.address}</Text>
+                </View>
+              }
+            </View> */}
             <TouchableOpacity onPress={this.doSignup.bind(this)} >
               <LinearGradient
                 colors={['#F39921', 'gray']}
@@ -871,7 +885,7 @@ export class VerifySignUpComponent extends Component {
 
           </View>
 
-          <View style={mainStyle.textCenter, mainStyle.pad10, { marginTop: 30 }}>
+          <View style={[mainStyle.textCenter, mainStyle.pad10, { marginTop: 30 }]}>
             <TouchableOpacity onPress={() => this.resendOtp()}>
               <Text style={[mainStyle.lightText, mainStyle.fontmd, mainStyle.textnm]}>
                 Click here to <Text style={[mainStyle.lightText, mainStyle.fontmd, mainStyle.textnm, mainStyle.blueText]}>resend</Text> otp

@@ -32,7 +32,13 @@ import RazorpayCheckout from 'react-native-razorpay';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default class SubscriptionsComponent extends Component {
-
+  static navigationOptions = ({ navigation }) => {
+    let params = navigation.state.params || {}; 
+    return {
+      headerLeft: <TouchableOpacity style={{ paddingLeft: 10 }} onPress={() => { navigation.goBack() }}
+      ><MaterialIcon name={'chevron-left'} size={35} color='#ffffff' /></TouchableOpacity>, 
+    };
+  };
   constructor() {
     super();
 

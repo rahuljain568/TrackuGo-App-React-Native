@@ -7,7 +7,7 @@ import {
   ToastAndroid,
   TouchableOpacity,
   Alert,
-  StyleSheet,AppState
+  StyleSheet, AppState
 } from 'react-native';
 // import BackgroundGeolocation from "@mauron85/react-native-background-geolocation";
 import dynamicLinks from '@react-native-firebase/dynamic-links';
@@ -294,7 +294,7 @@ export default class HomepageComponent extends Component {
 
   async componentDidMount() {
     try {
-      this.openDeepLinkingURL(); 
+      this.openDeepLinkingURL();
     } catch (error) {
       console.log(error);
     }
@@ -541,7 +541,7 @@ export default class HomepageComponent extends Component {
       this.setState({ appState: nextAppState });
 
       if (nextAppState === 'background') {
-        console.log("App is in Background Mode.") 
+        console.log("App is in Background Mode.")
       }
 
       if (nextAppState === 'active') {
@@ -568,7 +568,6 @@ export default class HomepageComponent extends Component {
 
   render() {
     let { location, iconBaseUrl, isModalVisible, user, errors, messages, current_address, devices, tabStatus } = this.state;
-    console.log("User Object", user);
     return (
       <View style={{ flex: 1, backgroundColor: Colors.white }}>
         <View style={{
@@ -606,6 +605,29 @@ export default class HomepageComponent extends Component {
             <GPSTab navigation={this.props.navigation} user={user} />
           )
         }
+
+        <View style={styles.vwBottomTab}>
+          <TouchableOpacity activeOpacity={0.5} style={styles.vwBottomTabChild} onPress={() => { }}>
+            <Icon name="home" size={22} color='#FFFFFF' />
+            <Text style={styles.txtBottomTab}>Home</Text>
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.5} style={styles.vwBottomTabChild} onPress={() => { NavigationService.navigate('homeStack', 'CircleList') }}>
+            <Icon name="google-circles-communities" size={22} color='#FFFFFF' />
+            <Text style={styles.txtBottomTab}>Circle</Text>
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.5} style={styles.vwBottomTabChild} onPress={() => { NavigationService.navigate('homeStack', 'Chat') }}>
+            <Icon name="forum-outline" size={22} color='#FFFFFF' />
+            <Text style={styles.txtBottomTab}>Chat</Text>
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.5} style={styles.vwBottomTabChild} onPress={() => { NavigationService.navigate('homeStack', 'Products') }}>
+            <Icon name="cart-outline" size={22} color='#FFFFFF' />
+            <Text style={styles.txtBottomTab}>Buy GPS</Text>
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.5} style={styles.vwBottomTabChild} onPress={() => { NavigationService.navigate('homeStack', 'Settings') }}>
+            <Icon name="dots-horizontal-circle-outline" size={22} color='#FFFFFF' />
+            <Text style={styles.txtBottomTab}>More</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -647,5 +669,36 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between'
   },
-  vwTabLine: { height: 4, width: '75%', position: 'absolute', bottom: 0, alignSelf: 'center', borderRadius: 30 }
+  vwTabLine: {
+    height: 4,
+    width: '75%',
+    position: 'absolute',
+    bottom: 0,
+    alignSelf: 'center',
+    borderRadius: 30
+  },
+  vwBottomTab: {
+    position: 'absolute',
+    bottom: 0,
+    height: 45,
+    width: '100%',
+    backgroundColor: '#595959',
+    elevation: 5,
+    borderTopColor: "#E4E4E7",
+    borderTopWidth: 0.5,
+    flexDirection: 'row',
+    alignContent: 'center',
+    justifyContent: 'space-between'
+  },
+  vwBottomTabChild: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '20%',
+    height: 45,
+  },
+  txtBottomTab: {
+    fontSize: 12,
+    color: '#FFFFFF',
+    fontWeight: '400'
+  },
 })

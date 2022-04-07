@@ -15,7 +15,7 @@ import {
   SafeAreaView,
   ToastAndroid,
   TouchableOpacity,
-  Alert
+  Alert, RefreshControl
 } from 'react-native';
 
 import { colors, Icon } from 'react-native-elements';
@@ -284,6 +284,7 @@ export default class ActiveTab extends Component {
 
       user: null,
       devices: [],
+      filtered_devices: [],
       status: null,
       location: {
         latitude: AppConfig.default_location.latitute,
@@ -325,7 +326,7 @@ export default class ActiveTab extends Component {
           longitude: lng,
           latitudeDelta: latitudeDelta,
           longitudeDelta: longitudeDelta,
-        }; 
+        };
       this.setState({
         region, location: location, current_address: loggedUser.address,
         user: loggedUser, iconBaseUrl: baseUrl + folders.vehicle_icons
@@ -352,20 +353,43 @@ export default class ActiveTab extends Component {
 
   onTabSelect(tab) {
     this.props.navigation.setParams({ selected: tab });
+
+    // local filter
+    let { devices } = this.state, tmpArray = [];
+    let tmpFilter = ""
+    if (tab) {
+      tmpFilter = tab.toUpperCase()
+      devices.forEach(element => {
+        if (element.current_state == tmpFilter) {
+          tmpArray.push(element)
+        }
+      });
+    } else {
+      tmpArray = devices
+    }
     this.setState({
+      filtered_devices: tmpArray,
       page: 1,
       nextPage: null,
       status: tab,
-    }, () => {
-      this.getDevices();
-    });
+    })
+
+    //// server side filter
+    // this.setState({
+    //   page: 1,
+    //   nextPage: null,
+    //   status: tab,
+    // }, () => {
+    //   this.getDevices();
+    // });
   }
 
   getDevices = (page) => {
     this.setState({ refreshing: true });
 
     if (!page) {
-      this.setState({ devices: [] });
+      this.props.navigation.setParams({ selected: null });
+      this.setState({ devices: [], filtered_devices: [] });
     }
 
     ApiService.call('get', UriConfig.uri.DEVICES + "?status=" + (this.state.status || "") + (page ? "&page=" + page : ""), {}, async (content, status) => {
@@ -375,7 +399,8 @@ export default class ActiveTab extends Component {
       this.setState({
         refreshing: false,
         nextPage: devices.next_page,
-        devices: [...this.state.devices, ...devices.items]
+        devices: [...this.state.devices, ...devices.items],
+        filtered_devices: [...this.state.devices, ...devices.items]
       });
 
       let stats = {},
@@ -518,19 +543,27 @@ export default class ActiveTab extends Component {
   };
   render() {
     let { location, iconBaseUrl, isModalVisible, user, errors, messages, current_address, devices } = this.state;
-    console.log("User Object", user); 
+  console.log(this.state.filtered_devices,'this.state.filtered_devices');
     return (
       <View style={mainStyle.flexOne}>
         {this.tabs1()}
         {/* {this.tabs()} */}
-        <ScrollView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={() => this.getDevices()}
+            />
+          }
+        >
           <View style={mainStyle.contentArea}>
             <Loader loading={this.state.loading} />
             {user && (
               <View style={homeStyle.itemView}>
                 <View style={mainStyle.flexRow}>
-                  <View style={homeStyle.itemHeaderText}>
+                  <View style={{ flex: 4, }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+                      <Image source={Icons.avatar} style={{ width: 26, height: 26, borderRadius: 13, marginRight: 5 }} />
                       <Text style={[homeStyle.itemHeaderTextMain, mainStyle.fontmd]}>{user.profile_name}</Text>
                     </View>
                   </View>
@@ -645,13 +678,14 @@ export default class ActiveTab extends Component {
             )}
 
             <FlatList
-              data={this.state.devices}
-              refreshing={this.state.refreshing}
-              onRefresh={() => this.getDevices()}
+              data={this.state.filtered_devices}
+              // refreshing={this.state.refreshing}
+              // onRefresh={() => this.getDevices()}
               showsVerticalScrollIndicator={false}
               keyExtractor={(item, index) => item._id}
               onEndReached={() => this.nextPageDevices()}
               ListEmptyComponent={this.renderEmptyContainer()}
+              contentContainerStyle={{ paddingBottom: 50 }}
               renderItem={({ item }) => {
                 let iconfile = iconBaseUrl ? iconBaseUrl + GeneralService.deviceSideviewIcon(item) : null,
                   mapIconUrl = iconBaseUrl ? iconBaseUrl + GeneralService.deviceTopviewIcon(item) : null,
@@ -879,14 +913,16 @@ export default class ActiveTab extends Component {
             />
           </View>
 
-          {user && !user.parent && (
-            <TouchableOpacity
-              style={mainStyle.floatingButton}
-              onPress={() => this.toggleModal()}
-            >
-              <Image source={Icons.plus} />
-            </TouchableOpacity>
-          )}
+          {
+            user && !user.parent && (
+              <TouchableOpacity
+                style={mainStyle.floatingButton}
+                onPress={() => this.toggleModal()}
+              >
+                <Image source={Icons.plus} />
+              </TouchableOpacity>
+            )
+          }
         </ScrollView>
         <Modal
           transparent={true}
@@ -958,7 +994,7 @@ export default class ActiveTab extends Component {
             </View>
           </View>
         </Modal>
-      </View>
+      </View >
     );
   }
 
@@ -975,8 +1011,6 @@ export default class ActiveTab extends Component {
     // let devices = navigation.getParam("devices", []);
     let params = navigation.state.params || {},
       stats = params ? params.stats : null;
-    console.log('params1111111', params);
-    console.log('stats11111111', stats);
     return (
       <View style={{ marginTop: 5, flexDirection: 'row', justifyContent: 'space-between' }}>
         {/* <View style={[homeStyle.statsView,{marginTop:60}]}> */}
@@ -1179,8 +1213,6 @@ export default class ActiveTab extends Component {
     // let devices = navigation.getParam("devices", []);
     let params = navigation.state.params || {},
       stats = params ? params.stats : null;
-    console.log('params1111111', params);
-    console.log('stats11111111', stats);
     return (
       <View
         style={{
@@ -1191,7 +1223,8 @@ export default class ActiveTab extends Component {
         }}>
         <ScrollView horizontal={true}>
           <TouchableOpacity
-            onPress={() => { (params ? params.tabSelect(null) : null), this.onTabSelect(null) }}
+            onPress={() => { this.onTabSelect(null) }}
+            // onPress={() => { (params ? params.tabSelect(null) : null), this.onTabSelect(null) }}
             style={params.selected == null ? homeStyle.filterViewActive : homeStyle.filterView}>
             <Text
               style={{
@@ -1203,7 +1236,8 @@ export default class ActiveTab extends Component {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => { (params ? params.tabSelect(null) : null), this.onTabSelect(null) }}
+            onPress={() => { this.onTabSelect(null) }}
+            // onPress={() => { (params ? params.tabSelect(null) : null), this.onTabSelect(null) }}
             style={params.selected == null ? homeStyle.filterViewActive : homeStyle.filterView}>
             <Text
               style={{
@@ -1215,7 +1249,8 @@ export default class ActiveTab extends Component {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => { (params ? params.tabSelect("on_trip") : null), this.onTabSelect("on_trip") }}
+            onPress={() => { this.onTabSelect("on_trip") }}
+            // onPress={() => { (params ? params.tabSelect("on_trip") : null), this.onTabSelect("on_trip") }}
             style={params.selected == "on_trip" ? homeStyle.filterViewActive : homeStyle.filterView}>
             <Text
               style={{
@@ -1227,7 +1262,8 @@ export default class ActiveTab extends Component {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => { (params ? params.tabSelect("stopped") : null), this.onTabSelect("stopped") }}
+            onPress={() => { this.onTabSelect("stopped") }}
+            // onPress={() => { (params ? params.tabSelect("stopped") : null), this.onTabSelect("stopped") }}
             style={params.selected == "stopped" ? homeStyle.filterViewActive : homeStyle.filterView}>
             <Text
               style={{
@@ -1239,7 +1275,8 @@ export default class ActiveTab extends Component {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => { (params ? params.tabSelect("idle") : null), this.onTabSelect("idle") }}
+            onPress={() => { this.onTabSelect("idle") }}
+            // onPress={() => { (params ? params.tabSelect("idle") : null), this.onTabSelect("idle") }}
             style={params.selected == "idle" ? homeStyle.filterViewActive : homeStyle.filterView}>
             <Text
               style={{
@@ -1251,19 +1288,21 @@ export default class ActiveTab extends Component {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => { (params ? params.tabSelect("idle") : null), this.onTabSelect("idle") }}
-            style={params.selected == "idle" ? homeStyle.filterViewActive : homeStyle.filterView}>
+            onPress={() => { this.onTabSelect("disconnected") }}
+            // onPress={() => { (params ? params.tabSelect("idle") : null), this.onTabSelect("idle") }}
+            style={params.selected == "disconnected" ? homeStyle.filterViewActive : homeStyle.filterView}>
             <Text
               style={{
-                fontSize: 14,
+                fontSize: 12,
                 color: 'black',
                 textAlign: 'center',
               }}>
-              No Data({stats && stats.IDLE ? stats.IDLE : 0})
+              Disconnected({stats && stats.DISCONNECTED ? stats.DISCONNECTED : 0})
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => { (params ? params.tabSelect("idle") : null), this.onTabSelect("idle") }}
+          {/* <TouchableOpacity
+            onPress={() => { this.onTabSelect("idle") }}
+            // onPress={() => { (params ? params.tabSelect("idle") : null), this.onTabSelect("idle") }}
             style={params.selected == "idle" ? homeStyle.filterViewActive : homeStyle.filterView}>
             <Text
               style={{
@@ -1273,7 +1312,7 @@ export default class ActiveTab extends Component {
               }}>
               Expired({stats && stats.IDLE ? stats.IDLE : 0})
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </ScrollView>
         {/* <TouchableOpacity
            onPress={() => {
@@ -1342,8 +1381,6 @@ export default class ActiveTab extends Component {
     // let devices = navigation.getParam("devices", []);
     let params = navigation.state.params || {},
       stats = params ? params.stats : null;
-    console.log('params1111111', params);
-    console.log('stats11111111', stats);
     return (
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', backgroundColor: Colors.theme.lightBackgroundColor, }}>
         {/* <View style={[homeStyle.statsView,{marginTop:60}]}> */}

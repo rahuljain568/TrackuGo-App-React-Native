@@ -79,9 +79,9 @@ const IconAdv = ({ num }) => {
 }
 
 export default class ParkingListComponent extends Component {
-  static navigationOptions = ({ navigation }) => { 
+  static navigationOptions = ({ navigation }) => {
     let params = navigation.state.params || {},
-    device = params.device || null;
+      device = params.device || null;
     return {
       headerLeft: <TouchableOpacity style={{ paddingLeft: 10 }} onPress={() => { navigation.goBack() }}
       ><MaterialIcon name={'chevron-left'} size={35} color='#ffffff' /></TouchableOpacity>,
@@ -159,7 +159,8 @@ export default class ParkingListComponent extends Component {
 
               ToastAndroid.show(status.message, ToastAndroid.SHORT);
 
-              NavigationService.navigate('homeStack', 'ParkingLocations');
+              // NavigationService.navigate('homeStack', 'ParkingList');
+              this.getParkingLocations();
             }, (error, errors, content) => {
               this.setState({ loading: false });
             });
@@ -170,7 +171,7 @@ export default class ParkingListComponent extends Component {
     );
   }
   copyToClipboard = (item) => {
-    let latLong = item.location.coordinates[0] + " " + item.location.coordinates[1]
+    let latLong = item.location.coordinates[1] + " " + item.location.coordinates[0]
     Clipboard.setString(latLong)
     ToastAndroid.show("Location copied", ToastAndroid.SHORT);
   }
@@ -266,7 +267,7 @@ export default class ParkingListComponent extends Component {
                         style={{ marginRight: 20 }}>
                         <CopyIcon name="copy" size={23} color="#cccccc" />
                       </TouchableOpacity>
-                      <TouchableOpacity onPress={() => GeneralService.openMapApp(item.location.coordinates[0], item.location.coordinates[1])}
+                      <TouchableOpacity onPress={() => GeneralService.openMapApp(item.location.coordinates[1], item.location.coordinates[0])}
                         style={{ marginRight: 5 }}>
                         <ShareIcon name="share-square" size={23} color="#cccccc" />
                       </TouchableOpacity>

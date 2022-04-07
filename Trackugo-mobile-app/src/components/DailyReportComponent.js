@@ -55,7 +55,7 @@ export default class DailyReportComponent extends React.Component {
             device: null,
             report_data: [],
 
-            reportData: [], shorting: 0
+            reportData: [], shorting: 1
         };
         this.searchHolder = [];
     }
@@ -276,6 +276,8 @@ export default class DailyReportComponent extends React.Component {
 
         let { navigation } = this.props;
         let devices = navigation.getParam("devices", null);
+        var pastDate = new Date();
+        pastDate.setDate(pastDate.getDate() - 30);
         return (
             <View style={{ backgroundColor: 'white', flex: 1 }}>
                 <View style={{
@@ -337,7 +339,7 @@ export default class DailyReportComponent extends React.Component {
                                         color: 'white',
                                     }}>
                                     Select Vehicle
-             </Text>
+                                </Text>
                             </View>
 
                             <TouchableOpacity
@@ -428,10 +430,8 @@ export default class DailyReportComponent extends React.Component {
                         style={{
                             width: 80,
                             height: 30,
-                            borderRadius: 15,
-                            backgroundColor: Colors.yellow,
-                            borderColor: shorting == 1 ? Colors.theme.backgroundModal : Colors.yellow,
-                            borderWidth: 2,
+                            borderRadius: 15, 
+                            backgroundColor: shorting == 1 ? Colors.red : Colors.yellow, 
                             justifyContent: 'center',
                         }}>
                         <Text
@@ -441,7 +441,7 @@ export default class DailyReportComponent extends React.Component {
                                 textAlign: 'center',
                             }}>
                             Today
-            </Text>
+                        </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => {
@@ -451,9 +451,7 @@ export default class DailyReportComponent extends React.Component {
                             width: 80,
                             height: 30,
                             borderRadius: 15,
-                            backgroundColor: Colors.yellow,
-                            borderColor: shorting == 2 ? Colors.theme.backgroundModal : Colors.yellow,
-                            borderWidth: 2,
+                            backgroundColor: shorting == 2 ? Colors.red : Colors.yellow, 
                             justifyContent: 'center',
                         }}>
                         <Text
@@ -463,7 +461,7 @@ export default class DailyReportComponent extends React.Component {
                                 textAlign: 'center',
                             }}>
                             Yesterday
-            </Text>
+                        </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => {
@@ -473,9 +471,7 @@ export default class DailyReportComponent extends React.Component {
                             width: 80,
                             height: 30,
                             borderRadius: 15,
-                            backgroundColor: Colors.yellow,
-                            borderColor: shorting == 3 ? Colors.theme.backgroundModal : Colors.yellow,
-                            borderWidth: 2,
+                            backgroundColor: shorting == 3 ? Colors.red : Colors.yellow, 
                             justifyContent: 'center',
                         }}>
                         <Text
@@ -485,7 +481,7 @@ export default class DailyReportComponent extends React.Component {
                                 textAlign: 'center',
                             }}>
                             Week
-            </Text>
+                        </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => {
@@ -495,9 +491,7 @@ export default class DailyReportComponent extends React.Component {
                             width: 80,
                             height: 30,
                             borderRadius: 15,
-                            backgroundColor: Colors.yellow,
-                            borderColor: shorting == 4 ? Colors.theme.backgroundModal : Colors.yellow,
-                            borderWidth: 2,
+                            backgroundColor: shorting == 4 ? Colors.red : Colors.yellow, 
                             justifyContent: 'center',
                         }}>
                         <Text
@@ -507,7 +501,7 @@ export default class DailyReportComponent extends React.Component {
                                 textAlign: 'center',
                             }}>
                             Month
-            </Text>
+                        </Text>
                     </TouchableOpacity>
                 </View>
 
@@ -532,7 +526,7 @@ export default class DailyReportComponent extends React.Component {
                                 fontSize: 16,
                             }}>
                             From Date
-            </Text>
+                        </Text>
                         <Text
                             allowFontScaling={false}
                             style={{
@@ -554,7 +548,7 @@ export default class DailyReportComponent extends React.Component {
                                 fontSize: 16,
                             }}>
                             To Date
-            </Text>
+                        </Text>
                         <Text
                             allowFontScaling={false}
                             style={{
@@ -568,6 +562,7 @@ export default class DailyReportComponent extends React.Component {
                             mode={'datetime'}
                             onConfirm={this.handleDatePicked}
                             onCancel={this.hideDateTimePicker}
+                            minimumDate={pastDate}
                             maximumDate={new Date()}
                             isVisible={this.state.isDateTimePickerVisible}
                         />
@@ -615,44 +610,71 @@ export default class DailyReportComponent extends React.Component {
                         // onRefresh={() => this.getReport()}
                         contentContainerStyle={{ paddingBottom: 50 }}
                         renderItem={({ item, index }) => {
-                            let iconfile = iconBaseUrl ? iconBaseUrl + GeneralService.deviceSideviewIcon(item.device) : null; 
+                            let iconfile = iconBaseUrl ? iconBaseUrl + GeneralService.deviceSideviewIcon(item.device) : null;
                             return (
                                 <View style={styles.mainBox}>
                                     <View style={styles.eachBox}>
-                                        <View>
-                                            <Image source={{ uri: iconfile }} style={{ width: 70, height: 55, resizeMode: 'contain', marginHorizontal: 8 }} />
-                                        </View>
                                         <View style={{ flex: 1, paddingHorizontal: 10 }}>
-                                            <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{item.device.license_plate}</Text>
-                                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                <View style={styles.subBox}>
-                                                    <Text style={styles.txtValue}>{item.engine_on_time}</Text>
-                                                    <Text style={styles.txtLabel, styles.txtLabelGreen}>Running</Text>
-                                                    <Text style={styles.txtLabel, styles.txtLabelGray}>N/A</Text>
-                                                    <Text style={styles.txtLabel, styles.txtLabelRed}>Alert</Text>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                <Image source={{ uri: iconfile }} style={{ width: 50, height: 40, resizeMode: 'contain', marginHorizontal: 8 }} />
+                                                <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{item.device.license_plate}</Text>
+                                            </View>
+                                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 15 }}>
+                                                <View style={{ width: '30%', justifyContent: 'flex-start' }}>
+                                                    <Text style={[styles.txtLabel, styles.txtLabelGreen]}>Running</Text>
+                                                    <Text style={styles.txtValue}>{item.engine_on_time ? item.engine_on_time : "N/A"}</Text>
                                                 </View>
-
-                                                <View style={styles.subBox}>
+                                                <View style={{ width: '30%', justifyContent: 'flex-start' }}>
+                                                    <Text style={[styles.txtLabel, styles.txtLabelYellow]}>Idle</Text>
                                                     <Text style={styles.txtValue}>N/A</Text>
-                                                    <Text style={styles.txtLabel, styles.txtLabelYellow}>Idle</Text>
-                                                    <Text style={{ color: 'black', fontWeight: 'bold', textAlign: 'center' }}>{item.total_distance}</Text>
-                                                    <Text style={styles.txtLabel, styles.txtLabelGreen}>Km</Text>
                                                 </View>
-
-                                                <View style={styles.subBox}>
-                                                    <Text style={styles.txtValue}>{item.stoppage_time}</Text>
-                                                    <Text style={styles.txtLabel, styles.txtLabelRed}>Stop</Text>
-                                                    <Text style={styles.txtLabel, styles.txtLabelGray}>{item.average_speed} Km/h</Text>
-                                                    <Text style={styles.txtLabel, styles.txtLabelGreen}>Avg. Speed</Text>
-                                                </View>
-
-                                                <View style={styles.subBox}>
-                                                    <Text style={styles.txtValue}>N/A</Text>
-                                                    <Text style={styles.txtLabel, styles.txtLabelRed}>Inactive</Text>
-                                                    <Text style={styles.txtLabel, styles.txtLabelGray}>{item.max_speed} Km/h</Text>
-                                                    <Text style={styles.txtLabel, styles.txtLabelGreen}>Max. Speed</Text>
+                                                <View style={{ width: '30%', justifyContent: 'flex-start' }}>
+                                                    <Text style={[styles.txtLabel, styles.txtLabelRed]}>Stop</Text>
+                                                    <Text style={styles.txtValue}>{item.stoppage_time ? item.stoppage_time : "N/A"}</Text>
                                                 </View>
                                             </View>
+                                            <View style={{ height: 1, backgroundColor: '#D4D4D8', width: '100%', marginTop: 6 }} />
+                                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 5 }}>
+                                                <View style={{ width: '30%', justifyContent: 'flex-start' }}>
+                                                    <Text style={[styles.txtLabel, styles.txtLabelGreen]}>Km</Text>
+                                                    <Text style={{ color: 'black', fontWeight: 'bold', textAlign: 'center' }}>{item.total_distance ? item.total_distance : "N/A"}</Text>
+                                                </View>
+                                                <View style={{ width: '30%', justifyContent: 'flex-start' }}>
+                                                    <Text style={[styles.txtLabel, styles.txtLabelGreen]}>Avg. Speed</Text>
+                                                    <Text style={[styles.txtLabel, styles.txtLabelGray]}>{item.average_speed? item.average_speed+" Km/h" : "N/A"}</Text>
+                                                </View>
+                                                <View style={{ width: '30%', justifyContent: 'flex-start' }}>
+                                                    <Text style={[styles.txtLabel, styles.txtLabelGreen]}>Max. Speed</Text>
+                                                    <Text style={[styles.txtLabel, styles.txtLabelGray]}>{item.max_speed?item.max_speed+" Km/h":"N/A"}</Text>
+                                                </View>
+                                            </View> 
+                                            <View style={{ height: 0.5, backgroundColor: '#D4D4D8', width: '100%', marginTop: 10 }} />
+                                            {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                <View style={styles.subBox}>
+                                                    <Text style={[styles.txtLabel, styles.txtLabelGreen]}>Running</Text>
+                                                    <Text style={styles.txtValue}>{item.engine_on_time}</Text>
+                                                    <Text style={[styles.txtLabel, styles.txtLabelGray]}>N/A</Text>
+                                                    <Text style={[styles.txtLabel, styles.txtLabelRed]}>Alert</Text>
+                                                </View> 
+                                                <View style={styles.subBox}>
+                                                    <Text style={styles.txtValue}></Text>
+                                                    <Text style={[styles.txtLabel, styles.txtLabelYellow]}>Idle</Text>
+                                                    <Text style={[styles.txtLabel, styles.txtLabelGreen]}>Km</Text>
+                                                    <Text style={{ color: 'black', fontWeight: 'bold', textAlign: 'center' }}>{item.total_distance}</Text>
+                                                </View> 
+                                                <View style={styles.subBox}>
+                                                    <Text style={[styles.txtLabel, styles.txtLabelRed]}>Stop</Text>
+                                                    <Text style={styles.txtValue}>{item.stoppage_time}</Text>
+                                                    <Text style={[styles.txtLabel, styles.txtLabelGreen]}>Avg. Speed</Text>
+                                                    <Text style={[styles.txtLabel, styles.txtLabelGray]}>{item.average_speed} Km/h</Text>
+                                                </View> 
+                                                <View style={styles.subBox}>
+                                                    <Text style={styles.txtValue}>N/A</Text>
+                                                    <Text style={[styles.txtLabel, styles.txtLabelRed]}>Inactive</Text>
+                                                    <Text style={[styles.txtLabel, styles.txtLabelGreen]}>Max. Speed</Text>
+                                                    <Text style={[styles.txtLabel, styles.txtLabelGray]}>{item.max_speed} Km/h</Text>
+                                                </View>
+                                            </View> */}
                                         </View>
                                     </View>
                                     <View style={{ flexDirection: 'row', marginTop: 10, marginLeft: 15 }}>

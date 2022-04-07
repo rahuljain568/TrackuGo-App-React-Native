@@ -81,12 +81,12 @@ export default class LiveTrackComponent extends Component {
                 <Text style={[mainStyle.menuOptionMain, mainStyle.textlg, mainStyle.fontmd]}>Report</Text>
               </MenuOption>
               <View style={mainStyle.divider}></View>
-              <MenuOption onSelect={() => device ? NavigationService.navigate('homeStack', 'Subscription', { device: device }) : null}>
+              {/* <MenuOption onSelect={() => device ? NavigationService.navigate('homeStack', 'Subscription', { device: device }) : null}>
                 <Text style={[mainStyle.menuOptionMain, mainStyle.textlg, mainStyle.fontmd]}>Subscription</Text>
-              </MenuOption>
+              </MenuOption> */}
               <View style={mainStyle.divider}></View>
-              <MenuOption onSelect={() => device ? NavigationService.navigate('homeStack', 'DeviceDocuments', { device: device }) : null}>
-                <Text style={[mainStyle.menuOptionMain, mainStyle.textlg, mainStyle.fontmd]}>Vehicle Documents</Text>
+              <MenuOption onSelect={() => device ? NavigationService.navigate('homeStack', 'Driver', { device: device }) : null}>
+                <Text style={[mainStyle.menuOptionMain, mainStyle.textlg, mainStyle.fontmd]}>Driver Documents</Text>
               </MenuOption>
             </MenuOptions>
           </Menu>
@@ -652,9 +652,7 @@ export default class LiveTrackComponent extends Component {
               <View style={mainStyle.flexOne}>
                 <TouchableOpacity
                   onPress={() =>
-                    NavigationService.navigate("homeStack", "Driver", {
-                      device: device,
-                    })
+                    NavigationService.navigate("homeStack", "DeviceDocuments", { device: device, })
                   }
                 >
                   <Image

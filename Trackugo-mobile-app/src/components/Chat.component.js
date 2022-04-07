@@ -28,9 +28,18 @@ import ApiService from "../services/api.service";
 import GeneralService from "../services/general.service";
 import StorageService from "../services/storage.service";
 import NavigationService from "../services/navigation.service";
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 export default class ChatComponent extends Component {
+  static navigationOptions = ({ navigation }) => { 
+    let params = navigation.state.params || {},
+    device = params.device || null;
+    return {
+      headerLeft: <TouchableOpacity style={{ paddingLeft: 10 }} onPress={() => { navigation.goBack() }}
+      ><MaterialIcon name={'chevron-left'} size={35} color='#ffffff' /></TouchableOpacity>,
+    };
+  };
   constructor() {
     super();
 

@@ -29,14 +29,14 @@ import DateTimePicker from "react-native-modal-datetime-picker";
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default class DistanceReportComponent extends React.Component {
-    static navigationOptions = ({ navigation }) => { 
+    static navigationOptions = ({ navigation }) => {
         let params = navigation.state.params || {},
-        device = params.device || null;
+            device = params.device || null;
         return {
-          headerLeft: <TouchableOpacity style={{ paddingLeft: 10 }} onPress={() => { navigation.goBack() }}
-          ><MaterialIcon name={'chevron-left'} size={35} color='#ffffff' /></TouchableOpacity>,
+            headerLeft: <TouchableOpacity style={{ paddingLeft: 10 }} onPress={() => { navigation.goBack() }}
+            ><MaterialIcon name={'chevron-left'} size={35} color='#ffffff' /></TouchableOpacity>,
         };
-      };
+    };
     constructor(props) {
         super(props);
         this.state = {
@@ -54,7 +54,7 @@ export default class DistanceReportComponent extends React.Component {
                 to_date: false
             },
             current_picker: null, isLoading: false,
-            deviceDetails: null, shorting: 0
+            deviceDetails: null, shorting: 1
         };
     }
 
@@ -113,8 +113,8 @@ export default class DistanceReportComponent extends React.Component {
                 loading: true,
                 content: null
             });
-           console.log('post', uri + "/" + device._id, params);
-                ApiService.call('post', uri + "/" + device._id, params, (content) => {
+            console.log('post', uri + "/" + device._id, params);
+            ApiService.call('post', uri + "/" + device._id, params, (content) => {
                 console.log("content", content);
                 this.setState({
                     loading: false,
@@ -276,6 +276,9 @@ export default class DistanceReportComponent extends React.Component {
         // console.log('device1111', device);
         reportData = report_data || null,
             keys = reportData ? Object.keys(reportData) : [];
+
+        var pastDate = new Date();
+        pastDate.setDate(pastDate.getDate() - 30);
         return (
             <View style={{ backgroundColor: 'white', flex: 1 }}>
                 <Modal
@@ -315,7 +318,7 @@ export default class DistanceReportComponent extends React.Component {
                                         color: 'white',
                                     }}>
                                     Select Vehicle
-             </Text>
+                                </Text>
                             </View>
 
                             <TouchableOpacity
@@ -416,7 +419,7 @@ export default class DistanceReportComponent extends React.Component {
                                 textAlign: 'center',
                             }}>
                             Today
-            </Text>
+                        </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => {
@@ -436,7 +439,7 @@ export default class DistanceReportComponent extends React.Component {
                                 textAlign: 'center',
                             }}>
                             Yesterday
-            </Text>
+                        </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => {
@@ -456,7 +459,7 @@ export default class DistanceReportComponent extends React.Component {
                                 textAlign: 'center',
                             }}>
                             Week
-            </Text>
+                        </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => {
@@ -476,7 +479,7 @@ export default class DistanceReportComponent extends React.Component {
                                 textAlign: 'center',
                             }}>
                             Month
-            </Text>
+                        </Text>
                     </TouchableOpacity>
                 </View>
                 <View
@@ -500,7 +503,7 @@ export default class DistanceReportComponent extends React.Component {
                                 fontSize: 16,
                             }}>
                             From Date
-            </Text>
+                        </Text>
                         <Text
                             allowFontScaling={false}
                             style={{
@@ -522,7 +525,7 @@ export default class DistanceReportComponent extends React.Component {
                                 fontSize: 16,
                             }}>
                             To Date
-            </Text>
+                        </Text>
                         <Text
                             allowFontScaling={false}
                             style={{
@@ -536,6 +539,7 @@ export default class DistanceReportComponent extends React.Component {
                             mode={'datetime'}
                             onConfirm={this.handleDatePicked}
                             onCancel={this.hideDateTimePicker}
+                            minimumDate={pastDate}
                             maximumDate={new Date()}
                             isVisible={this.state.isDateTimePickerVisible}
                         />
@@ -557,20 +561,30 @@ export default class DistanceReportComponent extends React.Component {
                         />
                     </TouchableOpacity>
                 </View>
-                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
+                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20, marginBottom: 20 }}>
                     <View style={styles.subBox}>
                         <Text style={{ fontSize: 14 }}>Distance HISTORY</Text>
                     </View>
                 </View>
                 <View>
                     {
-                        keys.map((key) => {
+                        keys.map((key, index) => {
 
                             let distance = reportData[key];
 
                             return (
-                                <View style={{ flexDirection: "row", paddingLeft: 15 }} key={"distance" + key}>
-                                    <View style={mainStyle.itemsCenter}>
+                                // <View style={{ flexDirection: "row", paddingLeft: 15 }} key={"distance" + key}> 
+                                <View style={{ flexDirection: "row", justifyContent: 'space-between', width: '90%', alignSelf: 'center', marginBottom: 10 }} key={"distance" + key}>
+                                    <View style={{ width: '40%' }}>
+                                        <Text style={[mainStyle.textlg, mainStyle.fontbl, mainStyle.marginBottom10, mainStyle.blueText]}><Text style={[mainStyle.textlg, mainStyle.fontbl, mainStyle.marginBottom10, {color:'#333'}]}>{index+1+". "}</Text>{GeneralService.dateFormat(key, 'd M Y')}</Text>
+                                    </View>
+                                    <View style={{ width: '50%' }}>
+                                        <Text style={[mainStyle.fontmd, {color:'#333'}]}>{parseFloat(distance).toFixed(2)} kms</Text>
+                                    </View>
+                                    <TouchableOpacity style={[mainStyle.flexRow, { width: '10%', justifyContent: 'flex-end' }]} onPress={() => NavigationService.navigate('homeStack', 'Playback', { device: device, params: { date: key } })}>
+                                        <Icon name='angle-right' type='font-awesome' color={Colors.blue} size={20} />
+                                    </TouchableOpacity>
+                                    {/* <View style={mainStyle.itemsCenter}>
                                         <Image style={{ width: 25, height: 25 }} source={Icons.distance} />
 
                                         <View style={mainStyle.dividerVertical}>
@@ -589,7 +603,7 @@ export default class DistanceReportComponent extends React.Component {
                                             <Icon name='road' type='font-awesome' size={20} />
                                             <Text style={mainStyle.fontmd}>{parseFloat(distance).toFixed(2)} kms</Text>
                                         </View>
-                                    </View>
+                                    </View> */}
                                 </View>
                             )
                         })

@@ -233,7 +233,7 @@ export default class ProductsComponent extends Component {
   renderProductImage(imageFiles) {
     let imageFile = imageFiles && imageFiles.length > 0 ? imageFiles[0] : null,
       imageFileUrl = this.state.imagesBaseUrl && imageFile ? (this.state.imagesBaseUrl + imageFile.file_name) : null;
-
+console.log(imageFileUrl,'imageFileUrl');
     if (imageFileUrl) {
       return (
         // <Image source={{ uri: imageFileUrl }} style={productStyle.productImage} />
