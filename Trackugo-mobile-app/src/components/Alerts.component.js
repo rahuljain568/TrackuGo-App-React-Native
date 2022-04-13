@@ -110,7 +110,7 @@ export default class AlertsComponent extends Component {
             <Loader loading={this.state.loading} />
 
             <View style={alertStyle.alertItem}>
-              <Text style={[alertStyle.alertItemText, mainStyle.fontmd]}>Ignition</Text>
+              <Text style={[alertStyle.alertItemText, mainStyle.fontmd]}>Ignition Start and Stop</Text>
               <Switch
                 style={mainStyle.flexOne}
                 onValueChange={(value) => this.processInput(value, 'ignition')}
@@ -118,7 +118,7 @@ export default class AlertsComponent extends Component {
             </View>
 
             <View style={alertStyle.alertItem}>
-              <Text style={[alertStyle.alertItemText, mainStyle.fontmd]}>Immobilize</Text>
+              <Text style={[alertStyle.alertItemText, mainStyle.fontmd]}>Immobilizer Cut and Restore</Text>
               <Switch
                 style={mainStyle.flexOne}
                 onValueChange={(value) => this.processInput(value, 'immobilize')}
@@ -126,7 +126,7 @@ export default class AlertsComponent extends Component {
             </View>
 
             <View style={alertStyle.alertItem}>
-              <Text style={[alertStyle.alertItemText, mainStyle.fontmd]}>Tempering</Text>
+              <Text style={[alertStyle.alertItemText, mainStyle.fontmd]}>Geofence Arrival and Left</Text>
               <Switch
                 style={mainStyle.flexOne}
                 onValueChange={(value) => this.processInput(value, 'tempering')}
@@ -134,7 +134,7 @@ export default class AlertsComponent extends Component {
             </View>
 
             <View style={alertStyle.alertItem}>
-              <Text style={[alertStyle.alertItemText, mainStyle.fontmd]}>Engine</Text>
+              <Text style={[alertStyle.alertItemText, mainStyle.fontmd]}>Parking Mode</Text>
               <Switch
                 style={mainStyle.flexOne}
                 onValueChange={(value) => this.processInput(value, 'engine')}
@@ -142,7 +142,7 @@ export default class AlertsComponent extends Component {
             </View>
 
             <View style={alertStyle.alertItem}>
-              <Text style={[alertStyle.alertItemText, mainStyle.fontmd]}>Emergency/Panic</Text>
+              <Text style={[alertStyle.alertItemText, mainStyle.fontmd]}>No GPS Signal</Text>
               <Switch
                 style={mainStyle.flexOne}
                 onValueChange={(value) => this.processInput(value, 'emergency')}
