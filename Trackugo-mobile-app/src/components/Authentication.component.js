@@ -192,7 +192,7 @@ export default class AuthenticationComponent extends Component {
             TrackUGo
 </Text> */}
           <Text style={{ fontSize: 15, color: 'gray', fontWeight: '500', textAlign: 'center', paddingHorizontal: 50 }}>
-            Complete Family and Vehicle Tracking with Dating Solutions
+            SATrack
           </Text>
         </View>
 
@@ -287,7 +287,8 @@ export default class AuthenticationComponent extends Component {
                 }}>
                 <Text style={{ color: '#fff', fontSize: 20 }}>Sign In</Text>
               </LinearGradient>
-            </TouchableOpacity> 
+            </TouchableOpacity>
+            <View style={mainStyle.flexRow}>
               <Text
                 onPress={() =>
                   NavigationService.navigate("auth", "ForgotPassword")
@@ -301,8 +302,9 @@ export default class AuthenticationComponent extends Component {
                 ]}
               >
                 Forgot Password?
-              </Text> 
-            <View>
+              </Text>
+            </View>
+            <View style={mainStyle.flexRow, mainStyle.flexOne}>
               <Text
                 onPress={() => NavigationService.navigate("auth", "SignUp")}
                 style={[
@@ -550,9 +552,9 @@ export class SignUpComponent extends Component {
               source={require("../assets/images/logo1024-1024.png")}
             />
             <Text style={{ fontSize: 17, color: 'gray', fontWeight: 'bold', textAlign: 'center' }}>
-              TrackUGo</Text>
+              SATrack</Text>
             <Text style={{ fontSize: 15, color: 'gray', fontWeight: '500', textAlign: 'center', paddingHorizontal: 50 }}>
-              Complete Family and Vehicle Tracking with Dating Solutions</Text>
+              Tracking</Text>
           </View>
 
           <View style={[authStyle.signupBox, { paddingBottom: 35, padding: 20, marginTop: 20 }]}>
@@ -661,7 +663,7 @@ export class SignUpComponent extends Component {
                 />
               </View>
             </TouchableOpacity>
-            {/* <View style={{ marginBottom: 15 }}>
+            <View style={{ marginBottom: 15 }}>
               <Text style={[authStyle.txtInputLabel, { marginTop: -7 }]}>Gender</Text>
               <View style={authStyle.vwGender}>
                 <TouchableOpacity onPress={() => this.onPressGender(1)}
@@ -680,7 +682,7 @@ export class SignUpComponent extends Component {
                   <Text style={[authStyle.txtGender, gender == 'Other' ? { color: "#ffffff" } : { color: "#333333" }]}>Other</Text>
                 </TouchableOpacity>
               </View>
-            </View> */}
+            </View>
             <View style={{ marginBottom: 15 }}>
               <View style={[authStyle.formInput, errors.address ? mainStyle.inputError : null]} >
                 <TextInput
@@ -696,23 +698,7 @@ export class SignUpComponent extends Component {
                   <Text style={mainStyle.errorMessage}>{messages.address}</Text>
                 </View>
               }
-            </View> 
-            {/* <View style={{ marginBottom: 15 }}>
-              <View style={[authStyle.formInput, errors.address ? mainStyle.inputError : null]} >
-                <TextInput
-                  style={authStyle.formInputField}
-                  onChangeText={(value) => this.validateInput(value, 'country')}
-                  placeholder="Country"
-                />
-
-              </View>
-              {
-                errors.address &&
-                <View style={authStyle.vwError}>
-                  <Text style={mainStyle.errorMessage}>{messages.address}</Text>
-                </View>
-              }
-            </View> */}
+            </View>
             <TouchableOpacity onPress={this.doSignup.bind(this)} >
               <LinearGradient
                 colors={['#F39921', 'gray']}
@@ -885,7 +871,7 @@ export class VerifySignUpComponent extends Component {
 
           </View>
 
-          <View style={[mainStyle.textCenter, mainStyle.pad10, { marginTop: 30 }]}>
+          <View style={mainStyle.textCenter, mainStyle.pad10, { marginTop: 30 }}>
             <TouchableOpacity onPress={() => this.resendOtp()}>
               <Text style={[mainStyle.lightText, mainStyle.fontmd, mainStyle.textnm]}>
                 Click here to <Text style={[mainStyle.lightText, mainStyle.fontmd, mainStyle.textnm, mainStyle.blueText]}>resend</Text> otp

@@ -110,7 +110,7 @@ export default class AlertsComponent extends Component {
             <Loader loading={this.state.loading} />
 
             <View style={alertStyle.alertItem}>
-              <Text style={[alertStyle.alertItemText, mainStyle.fontmd, { width: '80%'}]}>Ignition Start and Stop</Text>
+              <Text style={[alertStyle.alertItemText, mainStyle.fontmd, { width: '80%' }]}>Ignition Start and Stop</Text>
               <Switch
                 style={{ width: '20%' }}
                 onValueChange={(value) => this.processInput(value, 'ignition')}
@@ -118,7 +118,7 @@ export default class AlertsComponent extends Component {
             </View>
 
             <View style={alertStyle.alertItem}>
-              <Text style={[alertStyle.alertItemText, mainStyle.fontmd, { width: '80%'}]}>Immobilize Cut and Restore</Text>
+              <Text style={[alertStyle.alertItemText, mainStyle.fontmd, { width: '80%' }]}>Immobilize Cut and Restore</Text>
               <Switch
                 style={{ width: '20%' }}
                 onValueChange={(value) => this.processInput(value, 'immobilize')}
@@ -126,7 +126,7 @@ export default class AlertsComponent extends Component {
             </View>
 
             <View style={alertStyle.alertItem}>
-              <Text style={[alertStyle.alertItemText, mainStyle.fontmd, { width: '80%'}]}>Device Unplugged</Text>
+              <Text style={[alertStyle.alertItemText, mainStyle.fontmd, { width: '80%' }]}>Device Unplugged</Text>
               <Switch
                 style={{ width: '20%' }}
                 onValueChange={(value) => this.processInput(value, 'tempering')}
@@ -134,7 +134,7 @@ export default class AlertsComponent extends Component {
             </View>
 
             <View style={alertStyle.alertItem}>
-              <Text style={[alertStyle.alertItemText, mainStyle.fontmd, { width: '80%'}]}>Geofence Arrival and Left</Text>
+              <Text style={[alertStyle.alertItemText, mainStyle.fontmd, { width: '80%' }]}>Geofence Arrival and Left</Text>
               <Switch
                 style={{ width: '20%' }}
                 onValueChange={(value) => this.processInput(value, 'engine')}
@@ -142,7 +142,7 @@ export default class AlertsComponent extends Component {
             </View>
 
             <View style={alertStyle.alertItem}>
-              <Text style={[alertStyle.alertItemText, mainStyle.fontmd, { width: '80%'}]}>Parking Mode</Text>
+              <Text style={[alertStyle.alertItemText, mainStyle.fontmd, { width: '80%' }]}>Parking Mode</Text>
               <Switch
                 style={{ width: '20%' }}
                 onValueChange={(value) => this.processInput(value, 'emergency')}
@@ -150,7 +150,7 @@ export default class AlertsComponent extends Component {
             </View>
 
             <View style={alertStyle.alertItem}>
-              <Text style={[alertStyle.alertItemText, mainStyle.fontmd, { width: '80%'}]}>No GPS Signal</Text>
+              <Text style={[alertStyle.alertItemText, mainStyle.fontmd, { width: '80%' }]}>No GPS Signal</Text>
               <Switch
                 style={{ width: '20%' }}
                 onValueChange={(value) => this.processInput(value, 'unplugged')}
@@ -158,7 +158,7 @@ export default class AlertsComponent extends Component {
             </View>
 
             <View style={alertStyle.alertItem}>
-              <Text style={[alertStyle.alertItemText, mainStyle.fontmd, { width: '80%'}]}>Maintenance</Text>
+              <Text style={[alertStyle.alertItemText, mainStyle.fontmd, { width: '80%' }]}>Maintenance</Text>
               <Switch
                 style={{ width: '20%' }}
                 onValueChange={(value) => this.processInput(value, 'maintenance')}
@@ -166,7 +166,7 @@ export default class AlertsComponent extends Component {
             </View>
 
             <View style={alertStyle.alertItem}>
-              <Text style={[alertStyle.alertItemText, mainStyle.fontmd, { width: '80%'}]}>Overspeed</Text>
+              <Text style={[alertStyle.alertItemText, mainStyle.fontmd, { width: '80%' }]}>Overspeed</Text>
               <TextInput
                 value={(values.overspeed || "").toString()}
                 onChangeText={(value) => this.processInput(value, 'overspeed')}
