@@ -96,7 +96,8 @@ export default class ParkingListComponent extends Component {
 
       loading: false,
       refreshing: false,
-      parkingLocations: []
+      parkingLocations: [],
+      search: ""
     };
 
   }
@@ -180,6 +181,12 @@ export default class ParkingListComponent extends Component {
   //   ToastAndroid.show(text, ToastAndroid.SHORT);
   // }
   render() {
+    let parkingLocations = []
+    let filterText = this.state.search.toLowerCase()
+    let filterData = this.state.parkingLocations.filter(item => {
+      if (item.location_name.toLowerCase().match(filterText)) { return item }
+    })
+    parkingLocations = filterData
     return (
 
       <View style={{ backgroundColor: Colors.theme.lightBackgroundColor, flex: 1 }}>
@@ -196,13 +203,15 @@ export default class ParkingListComponent extends Component {
             placeholderTextColor="#b3b3b3"
             style={{ fontSize: 16 }}
             inputContainerStyle={styles.searchStyle}
+            value={this.state.search}
             leftIcon={<Icon name="search" type="font-awesome" size={22} color="gray" />}
+            onChangeText={(value) => this.setState({ search: value })}
           />
         </View>
         {/* <ScrollView> */}
 
         <FlatList
-          data={this.state.parkingLocations}
+          data={parkingLocations}
           refreshing={this.state.refreshing}
           showsVerticalScrollIndicator={false}
           onRefresh={() => this.getParkingLocations()}
@@ -276,7 +285,7 @@ export default class ParkingListComponent extends Component {
                 </TouchableOpacity>
               </View>
             )
-          }} />
+          }} /> 
 
         {/* <View style={{ backgroundColor: '#595959', paddingVertical: 7 }}>
         <Text style={{ fontSize: 19, fontWeight: 'bold', color: '#fff', textAlign: 'center' }}>Total number of idle  10</Text>

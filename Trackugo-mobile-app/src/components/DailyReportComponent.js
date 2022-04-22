@@ -121,7 +121,7 @@ export default class DailyReportComponent extends React.Component {
         devices = navigation.getParam("devices", []);
         var elementsProcessed = 0;
         devices.forEach((element, index, array) => {
-            let { device, from_date, to_date, reportData } = this.state;
+            let { device, from_date, to_date, reportData, } = this.state;
             let fromDate = from_date, toDate = to_date;
 
             let params = {
@@ -137,7 +137,7 @@ export default class DailyReportComponent extends React.Component {
             });
             ApiService.call('post', UriConfig.uri.REPORT_CONSOLIDATED + "/" + element._id, params, (content) => {
 
-                this.setState({ content: content });
+                this.setState({ content: content, emptyMsg: 'No Record Found.' });
                 console.log('content', content);
                 let tmp = [content];
                 tmp.forEach(element => {
@@ -150,14 +150,15 @@ export default class DailyReportComponent extends React.Component {
                     this.searchHolder = [... this.searchHolder, ...reportData];
                 });
             }, (error, errors, content) => {
-                this.setState({ loading: false, refreshing: false });
+                this.setState({ refreshing: false });
             });
 
             elementsProcessed++;
             if (elementsProcessed === array.length) {
-                this.setState({ loading: false, refreshing: false });
+                this.setState({ refreshing: false });
             }
         });
+        this.setState({ loading: false });
     }
 
     saveFuelSettings = () => {
@@ -430,8 +431,8 @@ export default class DailyReportComponent extends React.Component {
                         style={{
                             width: 80,
                             height: 30,
-                            borderRadius: 15, 
-                            backgroundColor: shorting == 1 ? Colors.red : Colors.yellow, 
+                            borderRadius: 15,
+                            backgroundColor: shorting == 1 ? Colors.red : Colors.yellow,
                             justifyContent: 'center',
                         }}>
                         <Text
@@ -451,7 +452,7 @@ export default class DailyReportComponent extends React.Component {
                             width: 80,
                             height: 30,
                             borderRadius: 15,
-                            backgroundColor: shorting == 2 ? Colors.red : Colors.yellow, 
+                            backgroundColor: shorting == 2 ? Colors.red : Colors.yellow,
                             justifyContent: 'center',
                         }}>
                         <Text
@@ -471,7 +472,7 @@ export default class DailyReportComponent extends React.Component {
                             width: 80,
                             height: 30,
                             borderRadius: 15,
-                            backgroundColor: shorting == 3 ? Colors.red : Colors.yellow, 
+                            backgroundColor: shorting == 3 ? Colors.red : Colors.yellow,
                             justifyContent: 'center',
                         }}>
                         <Text
@@ -491,7 +492,7 @@ export default class DailyReportComponent extends React.Component {
                             width: 80,
                             height: 30,
                             borderRadius: 15,
-                            backgroundColor: shorting == 4 ? Colors.red : Colors.yellow, 
+                            backgroundColor: shorting == 4 ? Colors.red : Colors.yellow,
                             justifyContent: 'center',
                         }}>
                         <Text
@@ -641,13 +642,13 @@ export default class DailyReportComponent extends React.Component {
                                                 </View>
                                                 <View style={{ width: '30%', justifyContent: 'flex-start' }}>
                                                     <Text style={[styles.txtLabel, styles.txtLabelGreen]}>Avg. Speed</Text>
-                                                    <Text style={[styles.txtLabel, styles.txtLabelGray]}>{item.average_speed? item.average_speed+" Km/h" : "N/A"}</Text>
+                                                    <Text style={[styles.txtLabel, styles.txtLabelGray]}>{item.average_speed ? item.average_speed + " Km/h" : "N/A"}</Text>
                                                 </View>
                                                 <View style={{ width: '30%', justifyContent: 'flex-start' }}>
                                                     <Text style={[styles.txtLabel, styles.txtLabelGreen]}>Max. Speed</Text>
-                                                    <Text style={[styles.txtLabel, styles.txtLabelGray]}>{item.max_speed?item.max_speed+" Km/h":"N/A"}</Text>
+                                                    <Text style={[styles.txtLabel, styles.txtLabelGray]}>{item.max_speed ? item.max_speed + " Km/h" : "N/A"}</Text>
                                                 </View>
-                                            </View> 
+                                            </View>
                                             <View style={{ height: 0.5, backgroundColor: '#D4D4D8', width: '100%', marginTop: 10 }} />
                                             {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                                 <View style={styles.subBox}>
@@ -689,11 +690,15 @@ export default class DailyReportComponent extends React.Component {
                             )
                         }} />
                 }
+                {reportData.length == 0 &&
+                    <Text style={{ textAlign: 'center', fontSize: 16, marginTop: '50%' }}>{this.state.emptyMsg}</Text>
+                }
                 {/* </ScrollView> */}
                 <View style={{ backgroundColor: '#595959', paddingVertical: 7, position: 'absolute', bottom: 0, width: '100%' }}>
                     <Text style={{ fontSize: 19, fontWeight: 'bold', color: '#fff', textAlign: 'center' }}>Total number of Veichles {devices.length}</Text>
                 </View>
                 <Loader loading={this.state.loading} />
+                {/* <Loader loading={true} /> */}
             </View>
         );
     }

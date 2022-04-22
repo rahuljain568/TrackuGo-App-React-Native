@@ -119,11 +119,12 @@ export default class DistanceReportComponent extends React.Component {
                 this.setState({
                     loading: false,
                     report_data: content.report_data,
-                    isLoading: false, refreshing: false
+                    isLoading: false, refreshing: false,
+                    emptyMsg:'No Record Found.'
                 });
-                if (content.report_data.length == 0) {
-                    alert("No data available..");
-                }
+                // if (content.report_data.length == 0) {
+                //     alert("No data available..");
+                // }
             }, (error, errors, content) => {
                 this.setState({ loading: false, refreshing: false });
             });
@@ -576,10 +577,10 @@ export default class DistanceReportComponent extends React.Component {
                                 // <View style={{ flexDirection: "row", paddingLeft: 15 }} key={"distance" + key}> 
                                 <View style={{ flexDirection: "row", justifyContent: 'space-between', width: '90%', alignSelf: 'center', marginBottom: 10 }} key={"distance" + key}>
                                     <View style={{ width: '40%' }}>
-                                        <Text style={[mainStyle.textlg, mainStyle.fontbl, mainStyle.marginBottom10, mainStyle.blueText]}><Text style={[mainStyle.textlg, mainStyle.fontbl, mainStyle.marginBottom10, {color:'#333'}]}>{index+1+". "}</Text>{GeneralService.dateFormat(key, 'd M Y')}</Text>
+                                        <Text style={[mainStyle.textlg, mainStyle.fontbl, mainStyle.marginBottom10, mainStyle.blueText]}><Text style={[mainStyle.textlg, mainStyle.fontbl, mainStyle.marginBottom10, { color: '#333' }]}>{index + 1 + ". "}</Text>{GeneralService.dateFormat(key, 'd M Y')}</Text>
                                     </View>
                                     <View style={{ width: '50%' }}>
-                                        <Text style={[mainStyle.fontmd, {color:'#333'}]}>{parseFloat(distance).toFixed(2)} kms</Text>
+                                        <Text style={[mainStyle.fontmd, { color: '#333' }]}>{parseFloat(distance).toFixed(2)} kms</Text>
                                     </View>
                                     <TouchableOpacity style={[mainStyle.flexRow, { width: '10%', justifyContent: 'flex-end' }]} onPress={() => NavigationService.navigate('homeStack', 'Playback', { device: device, params: { date: key } })}>
                                         <Icon name='angle-right' type='font-awesome' color={Colors.blue} size={20} />
@@ -610,11 +611,8 @@ export default class DistanceReportComponent extends React.Component {
 
                     }
 
-                    {
-                        content && keys.length <= 0 &&
-                        <View style={mainStyle.itemsCenter}>
-                            <Text style={mainStyle.fontrg}>No Record Found.</Text>
-                        </View>
+                    {keys.length == 0 &&
+                        <Text style={{ textAlign: 'center', fontSize: 16, marginTop: '50%' }}>{this.state.emptyMsg}</Text>
                     }
 
                 </View>

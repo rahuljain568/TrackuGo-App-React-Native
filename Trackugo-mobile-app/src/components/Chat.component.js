@@ -56,19 +56,19 @@ export default class ChatComponent extends Component {
   }
 
   async componentDidMount() {
-    this.props.navigation.setParams({handleToggle:this.toggleSearch})
-    let user = JSON.parse(await StorageService.fetch("user")),
-      baseUrl = await StorageService.fetch("assets_url"),
-      folders = JSON.parse(await StorageService.fetch("folders"));
+    // this.props.navigation.setParams({handleToggle:this.toggleSearch})
+    // let user = JSON.parse(await StorageService.fetch("user")),
+    //   baseUrl = await StorageService.fetch("assets_url"),
+    //   folders = JSON.parse(await StorageService.fetch("folders"));
 
-    this.setState({
-      user: user,
-      iconBaseUrl: baseUrl + folders.vehicle_icons,
-    });
+    // this.setState({
+    //   user: user,
+    //   iconBaseUrl: baseUrl + folders.vehicle_icons,
+    // });
 
-    this.props.navigation.addListener("didFocus", (payload) => {
-      this.getUsers();
-    });
+    // this.props.navigation.addListener("didFocus", (payload) => {
+    //   this.getUsers();
+    // });
   }
 
   getUsers(page) {
@@ -154,7 +154,8 @@ export default class ChatComponent extends Component {
               value={this.state.searchText}
             />
           </View>
-          <FlatList
+          <Text style={{textAlign:'center',fontSize:20,marginTop:'50%'}}>Coming Soon</Text>
+          {/* <FlatList
             data={users}
             refreshing={refreshing}
             onRefresh={() => this.getUsers()}
@@ -202,7 +203,7 @@ export default class ChatComponent extends Component {
                 </TouchableOpacity>
               );
             }}
-          />
+          /> */}
         </View>
       </View>
     );

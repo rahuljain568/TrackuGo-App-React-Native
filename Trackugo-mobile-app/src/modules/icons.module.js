@@ -45,7 +45,22 @@ const Icons = {
   ic_radiobox_blank: require("../assets/icons/radiobox-blank.png"),
   ic_radiobox_marked: require("../assets/icons/radiobox-marked.png"),
   marker: require("../assets/icons/Marker.png"),
-  avatar: require("../assets/icons/avatar.jpg"), 
+  avatar: require("../assets/icons/avatar.jpg"),
+
+  battery_green: require("../assets/ic-notification/battery-green.png"), 
+  battery_red: require("../assets/ic-notification/battery-red.png"), 
+  geofence_arrived_in: require("../assets/ic-notification/geofence-arrived-in.png"), 
+  geofence_left: require("../assets/ic-notification/geofence-left.png"), 
+  ignition: require("../assets/ic-notification/ignition.png"), 
+  ignition_off: require("../assets/ic-notification/ignition-off.png"), 
+  immobilizer_cut: require("../assets/ic-notification/immobilizer-cut.png"), 
+  immobilizer_restore: require("../assets/ic-notification/immobilizer-restore.png"), 
+  maintenance: require("../assets/ic-notification/maintenance.png"), 
+  no_gps: require("../assets/ic-notification/no-gps.png"), 
+  order_placed: require("../assets/ic-notification/order-placed.png"), 
+  overspeed: require("../assets/ic-notification/overspeed.png"), 
+  parking_mode: require("../assets/ic-notification/parking-mode.png"), 
+  unplugged: require("../assets/ic-notification/unplugged.png"),  
 };
 
 export const Images = {

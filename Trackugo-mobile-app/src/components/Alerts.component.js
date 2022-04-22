@@ -26,7 +26,7 @@ import ApiService from '../services/api.service';
 import Loader from '../modules/loader.module';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const fields = ['overspeed', 'ignition', 'tempering', 'emergency', 'engine', 'maintenance', 'driver_behaviour', 'unplugged', 'battery','immobilize'];
+const fields = ['overspeed', 'ignition', 'tempering', 'emergency', 'engine', 'maintenance', 'driver_behaviour', 'unplugged', 'battery', 'immobilize'];
 
 export default class AlertsComponent extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -110,63 +110,63 @@ export default class AlertsComponent extends Component {
             <Loader loading={this.state.loading} />
 
             <View style={alertStyle.alertItem}>
-              <Text style={[alertStyle.alertItemText, mainStyle.fontmd]}>Ignition</Text>
+              <Text style={[alertStyle.alertItemText, mainStyle.fontmd, { width: '80%'}]}>Ignition Start and Stop</Text>
               <Switch
-                style={mainStyle.flexOne}
+                style={{ width: '20%' }}
                 onValueChange={(value) => this.processInput(value, 'ignition')}
                 value={values.ignition || false} />
             </View>
 
             <View style={alertStyle.alertItem}>
-              <Text style={[alertStyle.alertItemText, mainStyle.fontmd]}>Immobilize</Text>
+              <Text style={[alertStyle.alertItemText, mainStyle.fontmd, { width: '80%'}]}>Immobilize Cut and Restore</Text>
               <Switch
-                style={mainStyle.flexOne}
+                style={{ width: '20%' }}
                 onValueChange={(value) => this.processInput(value, 'immobilize')}
                 value={values.immobilize || false} />
             </View>
 
             <View style={alertStyle.alertItem}>
-              <Text style={[alertStyle.alertItemText, mainStyle.fontmd]}>Tempering</Text>
+              <Text style={[alertStyle.alertItemText, mainStyle.fontmd, { width: '80%'}]}>Device Unplugged</Text>
               <Switch
-                style={mainStyle.flexOne}
+                style={{ width: '20%' }}
                 onValueChange={(value) => this.processInput(value, 'tempering')}
                 value={values.tempering || false} />
             </View>
 
             <View style={alertStyle.alertItem}>
-              <Text style={[alertStyle.alertItemText, mainStyle.fontmd]}>Engine</Text>
+              <Text style={[alertStyle.alertItemText, mainStyle.fontmd, { width: '80%'}]}>Geofence Arrival and Left</Text>
               <Switch
-                style={mainStyle.flexOne}
+                style={{ width: '20%' }}
                 onValueChange={(value) => this.processInput(value, 'engine')}
                 value={values.engine || false} />
             </View>
 
             <View style={alertStyle.alertItem}>
-              <Text style={[alertStyle.alertItemText, mainStyle.fontmd]}>Emergency/Panic</Text>
+              <Text style={[alertStyle.alertItemText, mainStyle.fontmd, { width: '80%'}]}>Parking Mode</Text>
               <Switch
-                style={mainStyle.flexOne}
+                style={{ width: '20%' }}
                 onValueChange={(value) => this.processInput(value, 'emergency')}
                 value={values.emergency || false} />
             </View>
 
             <View style={alertStyle.alertItem}>
-              <Text style={[alertStyle.alertItemText, mainStyle.fontmd]}>Device Unplugged</Text>
+              <Text style={[alertStyle.alertItemText, mainStyle.fontmd, { width: '80%'}]}>No GPS Signal</Text>
               <Switch
-                style={mainStyle.flexOne}
+                style={{ width: '20%' }}
                 onValueChange={(value) => this.processInput(value, 'unplugged')}
                 value={values.unplugged || false} />
             </View>
 
             <View style={alertStyle.alertItem}>
-              <Text style={[alertStyle.alertItemText, mainStyle.fontmd]}>Maintenance</Text>
+              <Text style={[alertStyle.alertItemText, mainStyle.fontmd, { width: '80%'}]}>Maintenance</Text>
               <Switch
-                style={mainStyle.flexOne}
+                style={{ width: '20%' }}
                 onValueChange={(value) => this.processInput(value, 'maintenance')}
                 value={values.maintenance || false} />
             </View>
 
             <View style={alertStyle.alertItem}>
-              <Text style={[alertStyle.alertItemText, mainStyle.fontmd]}>Overspeed</Text>
+              <Text style={[alertStyle.alertItemText, mainStyle.fontmd, { width: '80%'}]}>Overspeed</Text>
               <TextInput
                 value={(values.overspeed || "").toString()}
                 onChangeText={(value) => this.processInput(value, 'overspeed')}
@@ -176,7 +176,7 @@ export default class AlertsComponent extends Component {
                 maxLength={3}
               />
             </View>
-            
+
             <View style={alertStyle.alertItem}>
               <Text style={[alertStyle.alertItemText, mainStyle.fontmd]}>Battery</Text>
               <TextInput

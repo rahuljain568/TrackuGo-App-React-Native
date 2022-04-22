@@ -87,7 +87,7 @@ export default class NotificationsComponent extends Component {
     }
 
     let { filters } = this.state;
-
+    console.log(filters, 'filters');
     ApiService.call('get', UriConfig.uri.NOTIFICATIONS + "?types=" + filters.join(",") + (page ? "&page=" + page : ""), {}, (content) => {
 
       let notifications = content.notifications;
@@ -123,17 +123,18 @@ export default class NotificationsComponent extends Component {
   }
 
   toggleCheckbox = (notificationType) => {
-
-    let { filters } = this.state,
-      index = filters.indexOf(notificationType);
-
-    if (index < 0) {
-      filters = [...filters, notificationType];
+    if (notificationType == 'RESET') {
+      this.setState({ filters: [] });
     } else {
-      delete filters[index];
+      let { filters } = this.state,
+        index = filters.indexOf(notificationType);
+      if (index < 0) {
+        filters = [...filters, notificationType];
+      } else {
+        delete filters[index];
+      }
+      this.setState({ filters: filters });
     }
-
-    this.setState({ filters: filters });
   }
 
   render() {
@@ -159,43 +160,53 @@ export default class NotificationsComponent extends Component {
           keyExtractor={(item, index) => item._id}
           onEndReached={() => this.nextPageNotifications()}
           ListEmptyComponent={this.renderEmptyContainer()}
+          contentContainerStyle={{ paddingBottom: 70 }}
           renderItem={({ item, index, separators }) => {
             let iconName = "bell",
               iconColor = Colors.black;
-
             switch (item.notification_type) {
               case "OVERSPEED":
-                iconName = "tachometer";
+                iconName = Icons.overspeed;
                 iconColor = Colors.red;
                 break;
-
               case "IGNITION":
-                iconName = "ignitionon";
+                iconName = Icons.ignition;
                 iconColor = Colors.green;
                 break;
-
               case "IGNITIONOFF":
-                iconName = "ignitionon";
+                iconName = Icons.ignition_off;
                 iconColor = Colors.red;
                 break;
-
               case "IMMOBILIZE":
-                iconName = "ignitionoff";
+                iconName = Icons.immobilizer_cut;
                 iconColor = Colors.red;
                 break;
-
               case "UNPLUGGED":
-                iconName = "plug";
+                iconName = Icons.unplugged;
                 iconColor = Colors.red;
                 break;
-
               case "BATTERY":
-                iconName = "battery-1";
+                iconName = Icons.battery_green;
                 iconColor = Colors.yellow;
                 break;
-
               case "GEOFENCE":
-                iconName = "map-marker";
+                iconName = Icons.geofence_arrived_in;
+                iconColor = Colors.green;
+                break;
+              case "ORDER":
+                iconName = Icons.order_placed;
+                iconColor = Colors.green;
+                break;
+              case "NOGPSSIGNAL":
+                iconName = Icons.no_gps;
+                iconColor = Colors.green;
+                break;
+              case "PARKINGMODE":
+                iconName = Icons.parking_mode;
+                iconColor = Colors.green;
+                break;
+              case "MAINTENANCE":
+                iconName = Icons.maintenance;
                 iconColor = Colors.green;
                 break;
             }
@@ -207,7 +218,7 @@ export default class NotificationsComponent extends Component {
                   style={[
                     notificationStyle.notificationItem,
                     mainStyle.flexRow,
-                    { borderLeftColor: iconColor },
+                    { borderLeftColor: iconColor, backgroundColor: '#FFFFFF' },
                   ]}
                 >
                   <View
@@ -215,30 +226,27 @@ export default class NotificationsComponent extends Component {
                   >
                     {[
                       "IGNITION",
+                      "IGNITIONOFF",
                       "IMMOBILIZE",
                       "UNPLUGGED",
-                      "IGNITIONOFF",
+                      "GEOFENCE",
+                      "PARKINGMODE",
+                      "NOGPSSIGNAL",
+                      "MAINTENANCE",
+                      "ORDER",
+                      "OVERSPEED",
+                      "BATTERY",
+                      // "TEMPERING",
                     ].includes(item.notification_type) ? (
-                      <CustomIcon
-                        name={iconName}
-                        color={iconColor}
-                        size={25}
-                      />
+                      // <CustomIcon  name={iconName}  color={iconColor}  size={25} />
+                      <Image source={iconName} style={{ height: 25, width: 25 }} />
                     ) : (
-                      <Icon
-                        name={iconName}
-                        type="font-awesome"
-                        color={iconColor}
-                        size={25}
-                      />
+                      <Icon name={iconName} type="font-awesome" color={iconColor} size={25} />
                     )}
                   </View>
                   <View style={mainStyle.flexOne}>
-                    <Text
-                      style={[mainStyle.textnm, mainStyle.fontbl]}
-                    >
-                      {item.notification_title}
-                    </Text>
+                    <Text style={[mainStyle.textnm, mainStyle.fontbl]}>{item.notification_type}</Text>
+                    <Text style={[mainStyle.textnm, mainStyle.fontbl]}>{item.notification_title}</Text>
                     <Text
                       style={[
                         mainStyle.textsm,
@@ -279,14 +287,19 @@ export default class NotificationsComponent extends Component {
             <View style={mainStyle.modalForm}>
               <View style={mainStyle.formBody}>
                 {[
-                  "BATTERY",
                   "IGNITION",
+                  "IGNITIONOFF",
                   "IMMOBILIZE",
-                  "TEMPERING",
-                  "OVERSPEED",
-                  "MAINTENANCE",
                   "UNPLUGGED",
-                  "IGNITIONOFF"
+                  "GEOFENCE",
+                  "PARKINGMODE",
+                  "NOGPSSIGNAL",
+                  "MAINTENANCE",
+                  "ORDER",
+                  "OVERSPEED",
+                  "BATTERY",
+                  "RESET",
+                  // "TEMPERING",
                 ].map((notificationType) => (
                   <View
                     key={notificationType}
@@ -341,9 +354,9 @@ export default class NotificationsComponent extends Component {
 }
 
 export class NotificationViewComponent extends Component {
-  static navigationOptions = ({ navigation }) => { 
+  static navigationOptions = ({ navigation }) => {
     let params = navigation.state.params || {},
-    device = params.device || null;
+      device = params.device || null;
     return {
       headerLeft: <TouchableOpacity style={{ paddingLeft: 10 }} onPress={() => { navigation.goBack() }}
       ><MaterialIcon name={'chevron-left'} size={35} color='#ffffff' /></TouchableOpacity>,
