@@ -1235,7 +1235,7 @@ export default class ActiveTab extends Component {
   renderEmptyContainer() {
     return (
       <View style={mainStyle.itemsCenter}>
-        <Text style={mainStyle.fontrg}>{this.state.refreshing ? "Fetching devices..." : "You have not purchased any device. Please press add button to purchase."}</Text>
+        <Text style={mainStyle.fontrg}>{this.state.refreshing ? "Fetching devices..." : "You have not any device."}</Text>
       </View>
     );
   }
