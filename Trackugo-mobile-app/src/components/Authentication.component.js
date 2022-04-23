@@ -192,7 +192,7 @@ export default class AuthenticationComponent extends Component {
             TrackUGo
 </Text> */}
           <Text style={{ fontSize: 15, color: 'gray', fontWeight: '500', textAlign: 'center', paddingHorizontal: 50 }}>
-            SATrack
+            Complete Family and Vehicle Tracking Solution
           </Text>
         </View>
 
@@ -550,9 +550,9 @@ export class SignUpComponent extends Component {
               source={require("../assets/images/logo1024-1024.png")}
             />
             <Text style={{ fontSize: 17, color: 'gray', fontWeight: 'bold', textAlign: 'center' }}>
-              SATrack</Text>
+              TrackuGo</Text>
             <Text style={{ fontSize: 15, color: 'gray', fontWeight: '500', textAlign: 'center', paddingHorizontal: 50 }}>
-              Tracking</Text>
+              Complete Family and Vehicle Tracking Solution</Text>
           </View>
 
           <View style={[authStyle.signupBox, { paddingBottom: 35, padding: 20, marginTop: 20 }]}>
