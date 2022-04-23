@@ -646,7 +646,7 @@ export class SignUpComponent extends Component {
                 </View>
               }
             </View>
-            <TouchableOpacity style={{ marginBottom: 15 }} activeOpacity={1} onPress={this.showDateTimePickerFrom1}>
+              {/*<TouchableOpacity style={{ marginBottom: 15 }} activeOpacity={1} onPress={this.showDateTimePickerFrom1}>
               <View style={[authStyle.formInput, errors.address ? mainStyle.inputError : null]} >
                 <TextInput
                   style={[authStyle.formInputField, { color: '#333' }]}
@@ -663,7 +663,7 @@ export class SignUpComponent extends Component {
                 />
               </View>
             </TouchableOpacity>
-            <View style={{ marginBottom: 15 }}>
+             <View style={{ marginBottom: 15 }}>
               <Text style={[authStyle.txtInputLabel, { marginTop: -7 }]}>Gender</Text>
               <View style={authStyle.vwGender}>
                 <TouchableOpacity onPress={() => this.onPressGender(1)}
@@ -682,7 +682,7 @@ export class SignUpComponent extends Component {
                   <Text style={[authStyle.txtGender, gender == 'Other' ? { color: "#ffffff" } : { color: "#333333" }]}>Other</Text>
                 </TouchableOpacity>
               </View>
-            </View>
+            </View> */}
             <View style={{ marginBottom: 15 }}>
               <View style={[authStyle.formInput, errors.address ? mainStyle.inputError : null]} >
                 <TextInput
@@ -871,7 +871,7 @@ export class VerifySignUpComponent extends Component {
 
           </View>
 
-          <View style={mainStyle.textCenter, mainStyle.pad10, { marginTop: 30 }}>
+          <View style={[mainStyle.textCenter, mainStyle.pad10, { marginTop: 30 ]}>
             <TouchableOpacity onPress={() => this.resendOtp()}>
               <Text style={[mainStyle.lightText, mainStyle.fontmd, mainStyle.textnm]}>
                 Click here to <Text style={[mainStyle.lightText, mainStyle.fontmd, mainStyle.textnm, mainStyle.blueText]}>resend</Text> otp
