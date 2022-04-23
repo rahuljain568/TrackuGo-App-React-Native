@@ -288,7 +288,6 @@ export default class AuthenticationComponent extends Component {
                 <Text style={{ color: '#fff', fontSize: 20 }}>Sign In</Text>
               </LinearGradient>
             </TouchableOpacity>
-            <View style={mainStyle.flexRow}>
               <Text
                 onPress={() =>
                   NavigationService.navigate("auth", "ForgotPassword")
@@ -304,7 +303,6 @@ export default class AuthenticationComponent extends Component {
                 Forgot Password?
               </Text>
             </View>
-            <View style={mainStyle.flexRow, mainStyle.flexOne}>
               <Text
                 onPress={() => NavigationService.navigate("auth", "SignUp")}
                 style={[
