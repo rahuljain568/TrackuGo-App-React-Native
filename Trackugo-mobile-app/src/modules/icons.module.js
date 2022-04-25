@@ -67,7 +67,7 @@ export const Images = {
   bgImage: require('../assets/images/bg.png'),
   loginLogo: require('../assets/images/login-logo.png'),
   sideMenuLogo: require('../assets/images/side-menu-logo.png'),
-  mainLogo: require("../assets/images/logo1024-1024_3.jpg"),
+  mainLogo: require("../assets/images/logo1024-1024_3.png"),
   mainLoginLogo: require("../assets/images/logo1024-1024.png"),
   drawerLogo: require("../assets/images/mainIcoon2.png"),
   truck: require("../assets/images/truck.png"), 
