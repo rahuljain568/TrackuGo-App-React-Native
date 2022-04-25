@@ -1297,7 +1297,7 @@ export default class ActiveTab extends Component {
                 color: 'black',
                 textAlign: 'center',
               }}>
-              Disconnected({stats && stats.DISCONNECTED ? stats.DISCONNECTED : 0})
+              No Signal({stats && stats.DISCONNECTED ? stats.DISCONNECTED : 0})
             </Text>
           </TouchableOpacity>
           {/* <TouchableOpacity
