@@ -67,8 +67,8 @@ public class HeartbeartService extends Service {
         Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Tracking Service")
-                .setContentText("Running...")
+                .setContentTitle("TrackuGo")
+                //.setContentText("Running...")
                 .setSmallIcon(R.mipmap.ic_notification)
                 .setContentIntent(contentIntent)
                 .setOngoing(true)
